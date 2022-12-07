@@ -22,8 +22,6 @@
 # Install dependencies #
 singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime pip install -U scikit-learn
 singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime pip install -U transformers
-singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime pip install -U jupyter
-singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime export PATH=~/anaconda3/bin:$PATH
 
 # Run script #
-singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime jupyter nbconvert --execute bert.ipynb
+singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime python bert.py
