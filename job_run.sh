@@ -11,7 +11,7 @@
 
 # Runtime and memory
 #SBATCH --time=01:30:00
-#SBATCH --mem-per-cpu=2G
+#SBATCH --mem-per-cpu=4G
 
 #SBATCH --cpus-per-task=8
 
@@ -20,8 +20,7 @@
 #SBATCH --gres=gpu:rtx2080ti:2
 
 # Install dependencies #
-singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime pip install -U scikit-learn
 singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime pip install -U transformers
 
 # Run script #
-singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime python bert.py
+singularity exec --nv docker://pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime python bert.py $1
