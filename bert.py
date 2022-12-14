@@ -48,7 +48,7 @@ def main(batch_size, n_epochs, max_patience):
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
     model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2, output_attentions=False, output_hidden_states=False)
     model.cuda()
-    optimizer = th.optim.AdamW(model.parameters(), lr=5e-5, eps=1e-08)
+    optimizer = th.optim.Adam(model.parameters(), lr=1e-5)
 
     # Pre-process data
     token_id = []
@@ -140,13 +140,13 @@ def main(batch_size, n_epochs, max_patience):
                     best_model_state = model.state_dict()
                     th.save(best_model_state, './output/bert_model_ft.pt')
                     patience = max_patience
-                    print(f'Resetting patience to {max_patience}')
+                    print(f'Resetting patience to {max_patience}\n')
                 else:
                     patience -= 1
-                    print(f'Patience: {patience}')
+                    print(f'Patience: {patience}\n')
 
                 if patience == 0:
-                    print(f'Patience run out.')
+                    print(f'Patience run out.\n')
                     break
 
         else: # If patience is not run out, continue with training
@@ -203,7 +203,7 @@ def main(batch_size, n_epochs, max_patience):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--batch_size', type=int, default=32)
-    parser.add_argument('--n_epochs', type=int, default=6)
+    parser.add_argument('--n_epochs', type=int, default=25)
     parser.add_argument('--max_patience', type=int, default=8)
     args = parser.parse_args()
     main(batch_size=args.batch_size, n_epochs=args.n_epochs, max_patience=args.max_patience)
